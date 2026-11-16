@@ -1,0 +1,2289 @@
+{
+ "micro_units_per_unit": 1000000,
+ "scenarios": [
+  {
+   "id": "p1_confirmed_client_wins_rev",
+   "cover": 1,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "CLIENT_WINS",
+    "compensation": 1000000,
+    "fee": 50000,
+    "client_claimable": 3000000,
+    "freelancer_claimable": 0,
+    "treasury": 50000,
+    "freelancer_stake": 48950000,
+    "freelancer_locked": 0,
+    "lost": 1,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_confirmed_client_wins_norev",
+   "cover": 1,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "CLIENT_WINS",
+    "compensation": 1000000,
+    "fee": 50000,
+    "client_claimable": 3000000,
+    "freelancer_claimable": 0,
+    "treasury": 50000,
+    "freelancer_stake": 48950000,
+    "freelancer_locked": 0,
+    "lost": 1,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_confirmed_split_rev",
+   "cover": 1,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "SPLIT",
+    "compensation": 500000,
+    "fee": 25000,
+    "client_claimable": 2500000,
+    "freelancer_claimable": 0,
+    "treasury": 25000,
+    "freelancer_stake": 49475000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 1,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_confirmed_split_norev",
+   "cover": 1,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "SPLIT",
+    "compensation": 500000,
+    "fee": 25000,
+    "client_claimable": 2500000,
+    "freelancer_claimable": 0,
+    "treasury": 25000,
+    "freelancer_stake": 49475000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 1,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_confirmed_freelancer_wins_rev",
+   "cover": 1,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "FREELANCER_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_confirmed_freelancer_wins_norev",
+   "cover": 1,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "FREELANCER_WINS",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_confirmed_insufficient_evidence_norev",
+   "cover": 1,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "REOPENED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 1500000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_confirmed_insufficient_evidence_rev",
+   "cover": 1,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "REOPENED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 1500000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_confirmed_insufficient_evidence_norev_then_client_wins_rev",
+   "cover": 1,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "CLIENT_WINS",
+    "compensation": 1000000,
+    "fee": 50000,
+    "client_claimable": 3000000,
+    "freelancer_claimable": 0,
+    "treasury": 50000,
+    "freelancer_stake": 48950000,
+    "freelancer_locked": 0,
+    "lost": 1,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_confirmed_insufficient_evidence_norev_then_split_rev",
+   "cover": 1,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "SPLIT",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "SPLIT",
+    "compensation": 500000,
+    "fee": 25000,
+    "client_claimable": 2500000,
+    "freelancer_claimable": 0,
+    "treasury": 25000,
+    "freelancer_stake": 49475000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 1,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_confirmed_insufficient_evidence_norev_then_freelancer_wins_norev",
+   "cover": 1,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "FREELANCER_WINS",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_confirmed_insufficient_evidence_norev_then_insufficient_evidence_norev",
+   "cover": 1,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 2000000,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 1
+   }
+  },
+  {
+   "id": "p1_silent_client_wins_rev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "PAYOUT_PENDING",
+    "verdict": "CLIENT_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 1500000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_client_wins_norev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     false
+    ]
+   ],
+   "divergent": true,
+   "expect_genlayer": {
+    "status": "REOPENED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 1500000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   },
+   "expect_base": {
+    "status": "DISPUTED",
+    "verdict": "",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 1500000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   },
+   "base_reverts": true
+  },
+  {
+   "id": "p1_silent_split_rev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "PAYOUT_PENDING",
+    "verdict": "SPLIT",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 1500000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_split_norev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     false
+    ]
+   ],
+   "divergent": true,
+   "expect_genlayer": {
+    "status": "REOPENED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 1500000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   },
+   "expect_base": {
+    "status": "DISPUTED",
+    "verdict": "",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 1500000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   },
+   "base_reverts": true
+  },
+  {
+   "id": "p1_silent_freelancer_wins_rev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "FREELANCER_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_freelancer_wins_norev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "FREELANCER_WINS",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_insufficient_evidence_norev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "REOPENED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 1500000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_insufficient_evidence_rev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "REOPENED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 1500000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_insufficient_evidence_norev_then_client_wins_rev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "PAYOUT_PENDING",
+    "verdict": "CLIENT_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 1500000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_insufficient_evidence_norev_then_split_rev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "SPLIT",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "PAYOUT_PENDING",
+    "verdict": "SPLIT",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 1500000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_insufficient_evidence_norev_then_freelancer_wins_norev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "FREELANCER_WINS",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_insufficient_evidence_norev_then_insufficient_evidence_norev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 2000000,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 1
+   }
+  },
+  {
+   "id": "p1_silent_client_wins_rev_then_finalize",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ],
+    [
+     "f"
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "CLIENT_WINS",
+    "compensation": 250000,
+    "fee": 12500,
+    "client_claimable": 2250000,
+    "freelancer_claimable": 0,
+    "treasury": 12500,
+    "freelancer_stake": 49737500,
+    "freelancer_locked": 0,
+    "lost": 1,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_client_wins_rev_then_challenge_then_freelancer_wins_norev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "FREELANCER_WINS",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_client_wins_rev_then_challenge_then_client_wins_rev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "CLIENT_WINS",
+    "compensation": 250000,
+    "fee": 12500,
+    "client_claimable": 2250000,
+    "freelancer_claimable": 0,
+    "treasury": 12500,
+    "freelancer_stake": 49737500,
+    "freelancer_locked": 0,
+    "lost": 1,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_client_wins_rev_then_challenge_then_insufficient_evidence_norev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 2000000,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 1
+   }
+  },
+  {
+   "id": "p1_silent_insufficient_evidence_norev_then_client_wins_rev_then_finalize",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ],
+    [
+     "f"
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "CLIENT_WINS",
+    "compensation": 250000,
+    "fee": 12500,
+    "client_claimable": 2250000,
+    "freelancer_claimable": 0,
+    "treasury": 12500,
+    "freelancer_stake": 49737500,
+    "freelancer_locked": 0,
+    "lost": 1,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_insufficient_evidence_norev_then_client_wins_rev_then_challenge_then_client_wins_rev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "CLIENT_WINS",
+    "compensation": 250000,
+    "fee": 12500,
+    "client_claimable": 2250000,
+    "freelancer_claimable": 0,
+    "treasury": 12500,
+    "freelancer_stake": 49737500,
+    "freelancer_locked": 0,
+    "lost": 1,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_split_rev_then_finalize",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     true
+    ],
+    [
+     "f"
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "SPLIT",
+    "compensation": 250000,
+    "fee": 12500,
+    "client_claimable": 2250000,
+    "freelancer_claimable": 0,
+    "treasury": 12500,
+    "freelancer_stake": 49737500,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 1,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_split_rev_then_challenge_then_freelancer_wins_norev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "FREELANCER_WINS",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_split_rev_then_challenge_then_split_rev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "SPLIT",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "SPLIT",
+    "compensation": 250000,
+    "fee": 12500,
+    "client_claimable": 2250000,
+    "freelancer_claimable": 0,
+    "treasury": 12500,
+    "freelancer_stake": 49737500,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 1,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_split_rev_then_challenge_then_insufficient_evidence_norev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 2000000,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 1
+   }
+  },
+  {
+   "id": "p1_silent_insufficient_evidence_norev_then_split_rev_then_finalize",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "SPLIT",
+     true
+    ],
+    [
+     "f"
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "SPLIT",
+    "compensation": 250000,
+    "fee": 12500,
+    "client_claimable": 2250000,
+    "freelancer_claimable": 0,
+    "treasury": 12500,
+    "freelancer_stake": 49737500,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 1,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p1_silent_insufficient_evidence_norev_then_split_rev_then_challenge_then_split_rev",
+   "cover": 1,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "SPLIT",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "SPLIT",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "SPLIT",
+    "compensation": 250000,
+    "fee": 12500,
+    "client_claimable": 2250000,
+    "freelancer_claimable": 0,
+    "treasury": 12500,
+    "freelancer_stake": 49737500,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 1,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_confirmed_client_wins_rev",
+   "cover": 10,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "CLIENT_WINS",
+    "compensation": 10000000,
+    "fee": 500000,
+    "client_claimable": 12000000,
+    "freelancer_claimable": 0,
+    "treasury": 500000,
+    "freelancer_stake": 39500000,
+    "freelancer_locked": 0,
+    "lost": 1,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_confirmed_client_wins_norev",
+   "cover": 10,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "CLIENT_WINS",
+    "compensation": 10000000,
+    "fee": 500000,
+    "client_claimable": 12000000,
+    "freelancer_claimable": 0,
+    "treasury": 500000,
+    "freelancer_stake": 39500000,
+    "freelancer_locked": 0,
+    "lost": 1,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_confirmed_split_rev",
+   "cover": 10,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "SPLIT",
+    "compensation": 5000000,
+    "fee": 250000,
+    "client_claimable": 7000000,
+    "freelancer_claimable": 0,
+    "treasury": 250000,
+    "freelancer_stake": 44750000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 1,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_confirmed_split_norev",
+   "cover": 10,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "SPLIT",
+    "compensation": 5000000,
+    "fee": 250000,
+    "client_claimable": 7000000,
+    "freelancer_claimable": 0,
+    "treasury": 250000,
+    "freelancer_stake": 44750000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 1,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_confirmed_freelancer_wins_rev",
+   "cover": 10,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "FREELANCER_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_confirmed_freelancer_wins_norev",
+   "cover": 10,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "FREELANCER_WINS",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_confirmed_insufficient_evidence_norev",
+   "cover": 10,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "REOPENED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 15000000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_confirmed_insufficient_evidence_rev",
+   "cover": 10,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "REOPENED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 15000000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_confirmed_insufficient_evidence_norev_then_client_wins_rev",
+   "cover": 10,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "CLIENT_WINS",
+    "compensation": 10000000,
+    "fee": 500000,
+    "client_claimable": 12000000,
+    "freelancer_claimable": 0,
+    "treasury": 500000,
+    "freelancer_stake": 39500000,
+    "freelancer_locked": 0,
+    "lost": 1,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_confirmed_insufficient_evidence_norev_then_split_rev",
+   "cover": 10,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "SPLIT",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "SPLIT",
+    "compensation": 5000000,
+    "fee": 250000,
+    "client_claimable": 7000000,
+    "freelancer_claimable": 0,
+    "treasury": 250000,
+    "freelancer_stake": 44750000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 1,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_confirmed_insufficient_evidence_norev_then_freelancer_wins_norev",
+   "cover": 10,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "FREELANCER_WINS",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_confirmed_insufficient_evidence_norev_then_insufficient_evidence_norev",
+   "cover": 10,
+   "silent": false,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 2000000,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 1
+   }
+  },
+  {
+   "id": "p10_silent_client_wins_rev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "PAYOUT_PENDING",
+    "verdict": "CLIENT_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 15000000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_client_wins_norev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     false
+    ]
+   ],
+   "divergent": true,
+   "expect_genlayer": {
+    "status": "REOPENED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 15000000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   },
+   "expect_base": {
+    "status": "DISPUTED",
+    "verdict": "",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 15000000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   },
+   "base_reverts": true
+  },
+  {
+   "id": "p10_silent_split_rev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "PAYOUT_PENDING",
+    "verdict": "SPLIT",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 15000000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_split_norev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     false
+    ]
+   ],
+   "divergent": true,
+   "expect_genlayer": {
+    "status": "REOPENED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 15000000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   },
+   "expect_base": {
+    "status": "DISPUTED",
+    "verdict": "",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 15000000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   },
+   "base_reverts": true
+  },
+  {
+   "id": "p10_silent_freelancer_wins_rev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "FREELANCER_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_freelancer_wins_norev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "FREELANCER_WINS",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_insufficient_evidence_norev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "REOPENED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 15000000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_insufficient_evidence_rev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "REOPENED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 15000000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_insufficient_evidence_norev_then_client_wins_rev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "PAYOUT_PENDING",
+    "verdict": "CLIENT_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 15000000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_insufficient_evidence_norev_then_split_rev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "SPLIT",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "PAYOUT_PENDING",
+    "verdict": "SPLIT",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 15000000,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_insufficient_evidence_norev_then_freelancer_wins_norev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "FREELANCER_WINS",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_insufficient_evidence_norev_then_insufficient_evidence_norev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 2000000,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 1
+   }
+  },
+  {
+   "id": "p10_silent_client_wins_rev_then_finalize",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ],
+    [
+     "f"
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "CLIENT_WINS",
+    "compensation": 2500000,
+    "fee": 125000,
+    "client_claimable": 4500000,
+    "freelancer_claimable": 0,
+    "treasury": 125000,
+    "freelancer_stake": 47375000,
+    "freelancer_locked": 0,
+    "lost": 1,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_client_wins_rev_then_challenge_then_freelancer_wins_norev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "FREELANCER_WINS",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_client_wins_rev_then_challenge_then_client_wins_rev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "CLIENT_WINS",
+    "compensation": 2500000,
+    "fee": 125000,
+    "client_claimable": 4500000,
+    "freelancer_claimable": 0,
+    "treasury": 125000,
+    "freelancer_stake": 47375000,
+    "freelancer_locked": 0,
+    "lost": 1,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_client_wins_rev_then_challenge_then_insufficient_evidence_norev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 2000000,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 1
+   }
+  },
+  {
+   "id": "p10_silent_insufficient_evidence_norev_then_client_wins_rev_then_finalize",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ],
+    [
+     "f"
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "CLIENT_WINS",
+    "compensation": 2500000,
+    "fee": 125000,
+    "client_claimable": 4500000,
+    "freelancer_claimable": 0,
+    "treasury": 125000,
+    "freelancer_stake": 47375000,
+    "freelancer_locked": 0,
+    "lost": 1,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_insufficient_evidence_norev_then_client_wins_rev_then_challenge_then_client_wins_rev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "CLIENT_WINS",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "CLIENT_WINS",
+    "compensation": 2500000,
+    "fee": 125000,
+    "client_claimable": 4500000,
+    "freelancer_claimable": 0,
+    "treasury": 125000,
+    "freelancer_stake": 47375000,
+    "freelancer_locked": 0,
+    "lost": 1,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_split_rev_then_finalize",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     true
+    ],
+    [
+     "f"
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "SPLIT",
+    "compensation": 2500000,
+    "fee": 125000,
+    "client_claimable": 4500000,
+    "freelancer_claimable": 0,
+    "treasury": 125000,
+    "freelancer_stake": 47375000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 1,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_split_rev_then_challenge_then_freelancer_wins_norev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "FREELANCER_WINS",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "FREELANCER_WINS",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 0,
+    "freelancer_claimable": 2000000,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 1,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_split_rev_then_challenge_then_split_rev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "SPLIT",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "SPLIT",
+    "compensation": 2500000,
+    "fee": 125000,
+    "client_claimable": 4500000,
+    "freelancer_claimable": 0,
+    "treasury": 125000,
+    "freelancer_stake": 47375000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 1,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_split_rev_then_challenge_then_insufficient_evidence_norev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "SPLIT",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "INSUFFICIENT_EVIDENCE",
+    "compensation": 0,
+    "fee": 0,
+    "client_claimable": 2000000,
+    "freelancer_claimable": 0,
+    "treasury": 0,
+    "freelancer_stake": 50000000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 0,
+    "won": 0,
+    "inconclusive": 1
+   }
+  },
+  {
+   "id": "p10_silent_insufficient_evidence_norev_then_split_rev_then_finalize",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "SPLIT",
+     true
+    ],
+    [
+     "f"
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "SPLIT",
+    "compensation": 2500000,
+    "fee": 125000,
+    "client_claimable": 4500000,
+    "freelancer_claimable": 0,
+    "treasury": 125000,
+    "freelancer_stake": 47375000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 1,
+    "won": 0,
+    "inconclusive": 0
+   }
+  },
+  {
+   "id": "p10_silent_insufficient_evidence_norev_then_split_rev_then_challenge_then_split_rev",
+   "cover": 10,
+   "silent": true,
+   "steps": [
+    [
+     "r",
+     "INSUFFICIENT_EVIDENCE",
+     false
+    ],
+    [
+     "r",
+     "SPLIT",
+     true
+    ],
+    [
+     "c"
+    ],
+    [
+     "r",
+     "SPLIT",
+     true
+    ]
+   ],
+   "expect": {
+    "status": "RESOLVED",
+    "verdict": "SPLIT",
+    "compensation": 2500000,
+    "fee": 125000,
+    "client_claimable": 4500000,
+    "freelancer_claimable": 0,
+    "treasury": 125000,
+    "freelancer_stake": 47375000,
+    "freelancer_locked": 0,
+    "lost": 0,
+    "split": 1,
+    "won": 0,
+    "inconclusive": 0
+   }
+  }
+ ]
+}

@@ -1,0 +1,15 @@
+{
+  "accountAssociation": { "header": "SIGN_WITH_BASE_BUILD", "payload": "SIGN_WITH_BASE_BUILD", "signature": "SIGN_WITH_BASE_BUILD" },
+  "miniapp": {
+    "version": "1",
+    "name": "HireLock",
+    "homeUrl": "APP_URL/base.html",
+    "iconUrl": "APP_URL/icon.png",
+    "splashImageUrl": "APP_URL/icon.png",
+    "splashBackgroundColor": "#15120F",
+    "subtitle": "Staked freelancers, covered gigs",
+    "description": "Freelancer stakes and on-chain dispute resolution for paid freelance work.",
+    "primaryCategory": "finance",
+    "tags": ["escrow", "marketplace", "stake"]
+  }
+}

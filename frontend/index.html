@@ -1,0 +1,732 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>HireLock</title>
+<meta name="description" content="Freelancer stakes and on-chain dispute arbitration for paid work, built on GenLayer.">
+<meta name="theme-color" content="#C2410C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23C2410C'/%3E%3Cpath d='M11 14v-2a5 5 0 0110 0v2' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round'/%3E%3Crect x='7' y='14' width='18' height='12' rx='3' fill='white'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F7F5F2;--surface:#FFFFFF;--surface2:#F0EDE8;--line:#E1DCD3;--tx:#1C1A17;--mut:#6A645B;--sig:#C2410C;--sig-ink:#FFFFFF;--sig-soft:#FCE9DD;--acc:#3B5BDB;--acc-soft:#E6EBFB;--org:#0F766E;--org-soft:#DDF3EF;--ok:#15803D;--warn:#A16207;--bad:#B91C1C;--shadow:0 1px 2px rgba(28,26,23,.06),0 4px 14px rgba(28,26,23,.05);--r:12px;--pri:var(--sig);--teal:var(--sig);--bg2:var(--surface2);--card:var(--surface)}
+:root[data-theme=dark]{--bg:#15120F;--surface:#1D1915;--surface2:#26211C;--line:#373028;--tx:#F1EDE6;--mut:#B0A79A;--sig:#FF8A4C;--sig-ink:#2A1204;--sig-soft:#3A2113;--acc:#8EA6FF;--acc-soft:#1F2745;--org:#4FD1C1;--org-soft:#12302C;--ok:#4ADE80;--warn:#FBBF24;--bad:#F87171;--shadow:0 1px 2px rgba(0,0,0,.4),0 4px 14px rgba(0,0,0,.3)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html,body{margin:0;background:var(--bg);color:var(--tx);font-family:'Public Sans',system-ui,-apple-system,Segoe UI,sans-serif;font-size:16px;line-height:1.5}
+body{min-height:100vh;padding-bottom:76px}
+a{color:var(--sig);text-decoration:none}
+a:hover{text-decoration:underline}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.86em}
+header.top{position:sticky;top:0;z-index:20;background:var(--surface);border-bottom:1px solid var(--line)}
+.bar{max-width:1120px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:8px}
+.logo{display:flex;align-items:center;gap:8px;font-weight:700;font-size:1.1rem;color:var(--tx)}
+.logo:hover{text-decoration:none}
+.logo svg{width:26px;height:26px}
+.grow{flex:1;min-width:0}
+.shell{max-width:1120px;margin:0 auto;display:block}
+aside.side{display:none}
+main{padding:16px;min-width:0}
+h1{font-size:1.7rem;line-height:1.2;margin:.2em 0 .3em;letter-spacing:-.015em;font-weight:700}
+h2{font-size:1.1rem;margin:1.6em 0 .5em;font-weight:700}
+h3{font-size:1rem;margin:0 0 4px}
+.mut{color:var(--mut)}
+.sig{color:var(--sig)}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:14px;margin:10px 0;box-shadow:var(--shadow)}
+a.card{display:block;color:var(--tx);border-top:3px solid var(--line)}
+a.card:hover{text-decoration:none;border-color:var(--sig)}
+.row{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.between{justify-content:space-between}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:2px 10px;border-radius:99px;font-size:.78rem;border:1px solid var(--line);color:var(--mut);white-space:nowrap;background:var(--surface)}
+.pill:before{content:"";width:7px;height:7px;border-radius:50%;background:currentColor;opacity:.8}
+.pill.ok{color:var(--ok);border-color:currentColor}.pill.warn{color:var(--warn);border-color:currentColor}.pill.bad{color:var(--bad);border-color:currentColor}.pill.pri{color:var(--sig);border-color:currentColor}
+.btn{appearance:none;border:1px solid var(--sig);border-radius:10px;padding:11px 16px;font:inherit;font-weight:600;color:var(--sig-ink);background:var(--sig);cursor:pointer;min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px}
+.btn:hover{text-decoration:none;filter:brightness(1.05)}
+.btn.sec{background:var(--surface);color:var(--tx);border-color:var(--line)}
+.btn.sm{padding:7px 12px;min-height:38px;font-size:.92rem}
+.btn:disabled,body.busy .btn{opacity:.55;pointer-events:none}
+.btn.block{width:100%}
+.iconbtn{appearance:none;background:var(--surface);border:1px solid var(--line);border-radius:10px;width:38px;height:38px;color:var(--tx);cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.iconbtn svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+label{display:block;font-size:.85rem;color:var(--mut);margin:12px 0 4px}
+input,textarea,select{width:100%;background:var(--surface);color:var(--tx);border:1px solid var(--line);border-radius:10px;padding:11px 12px;font:inherit;font-size:16px}
+textarea{min-height:90px;resize:vertical}
+input:focus,textarea:focus,select:focus,.btn:focus-visible,.iconbtn:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--sig);outline-offset:2px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.stat{background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px}
+.stat b{display:block;font-size:1.2rem}
+.stat span{font-size:.8rem;color:var(--mut)}
+.stat small{display:block;font-size:.75rem;margin-top:2px;color:var(--sig)}
+nav.tabs{position:fixed;bottom:0;left:0;right:0;z-index:30;background:var(--surface);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom)}
+nav.tabs div{max-width:760px;margin:0 auto;display:flex}
+nav.tabs a{flex:1;text-align:center;padding:8px 2px;color:var(--mut);font-size:.72rem;min-height:48px}
+nav.tabs a:hover{text-decoration:none}
+nav.tabs a svg,aside.side a svg{display:block;margin:0 auto 2px;width:22px;height:22px;stroke:currentColor;fill:none;stroke-width:1.8}
+nav.tabs a.on{color:var(--sig);font-weight:600}
+aside.side a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;color:var(--tx);border:1px solid transparent;margin-bottom:4px}
+aside.side a svg{margin:0;width:20px;height:20px}
+aside.side a:hover{text-decoration:none;background:var(--surface2)}
+aside.side a.on{border-color:var(--sig);color:var(--sig);font-weight:600}
+.toast{position:fixed;left:16px;right:16px;bottom:92px;z-index:60;max-width:560px;margin:0 auto;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--sig);padding:12px 14px;border-radius:10px;box-shadow:var(--shadow)}
+.toast.err{border-left-color:var(--bad)}.toast.good{border-left-color:var(--ok)}
+.meter{height:8px;border-radius:99px;background:var(--surface2);overflow:hidden;border:1px solid var(--line)}
+.meter i{display:block;height:100%;background:var(--sig)}
+.steps{display:flex;gap:4px;margin:10px 0}
+.steps i{flex:1;height:6px;border-radius:99px;background:var(--line)}
+.steps i.d{background:var(--sig)}.steps i.c{background:var(--sig);opacity:.55}
+.ev{border-left:3px solid var(--line);padding:6px 10px;margin:8px 0;background:var(--surface2);border-radius:0 10px 10px 0;word-break:break-word}
+.ev.client{border-color:var(--warn)}.ev.freelancer{border-color:var(--sig)}
+.empty{text-align:center;color:var(--mut);padding:26px 10px}
+.warn-box{border:1px solid var(--warn);background:var(--surface2);border-radius:10px;padding:10px 12px;font-size:.9rem}
+.sk{height:64px;border-radius:var(--r);background:linear-gradient(90deg,var(--surface2),var(--surface),var(--surface2));background-size:200% 100%;animation:sk 1.2s infinite;margin:10px 0}
+@keyframes sk{to{background-position:-200% 0}}
+details{margin:8px 0}summary{cursor:pointer;color:var(--sig);min-height:36px;display:flex;align-items:center}
+code{font-family:ui-monospace,Menlo,monospace;font-size:.85em;background:var(--surface2);padding:1px 6px;border-radius:6px;word-break:break-all}
+.word{word-break:break-word}
+.hero{display:grid;gap:16px;align-items:center;padding:8px 0}
+.hero p.lede{color:var(--mut);margin:.3em 0 1em;max-width:52ch}
+.hero svg.art{width:100%;max-width:320px;height:auto;justify-self:center;animation:rise .7s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.hero svg.art,.sk{animation:none}}
+.live{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);background:var(--surface);border-radius:99px;padding:3px 12px;font-size:.8rem;color:var(--mut)}
+.live i{width:8px;height:8px;border-radius:50%;background:var(--mut)}
+.live.on i{background:var(--ok)}
+.stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
+.roles{display:grid;gap:10px}
+.role{display:flex;align-items:center;gap:12px;background:var(--surface);border:1px solid var(--line);border-radius:var(--r);padding:12px;color:var(--tx);box-shadow:var(--shadow)}
+.role:hover{border-color:var(--sig);text-decoration:none}
+.tile{width:48px;height:48px;border-radius:12px;background:var(--sig-soft);display:flex;align-items:center;justify-content:center;flex:none}
+.tile svg{width:26px;height:26px;stroke:var(--sig);fill:none;stroke-width:1.8}
+.tile.a{background:var(--acc-soft)}.tile.a svg{stroke:var(--acc)}.tile.o{background:var(--org-soft)}.tile.o svg{stroke:var(--org)}
+.feed .dot.a{background:var(--acc)}.how4 .card:nth-child(2) .n{background:var(--acc-soft);color:var(--acc)}.how4 .card:nth-child(4) .n{background:var(--org-soft);color:var(--org)}
+.role .arrow{margin-left:auto;color:var(--sig);font-size:1.3rem}
+.chips{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--tx);border-radius:99px;padding:8px 14px;font-size:.95rem;min-height:38px;display:inline-flex;align-items:center}
+.chip:hover{border-color:var(--sig);color:var(--sig);text-decoration:none}
+.feed .item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+.feed .item:last-child{border-bottom:0}
+.feed .dot{width:9px;height:9px;border-radius:50%;background:var(--sig);margin-top:7px;flex:none}
+.how4{display:grid;gap:10px}
+.how4 .card{margin:0}
+.how4 .n{display:inline-flex;width:26px;height:26px;border-radius:50%;background:var(--sig-soft);color:var(--sig);font-weight:700;align-items:center;justify-content:center;margin-bottom:6px}
+dialog{border:1px solid var(--line);border-radius:14px;background:var(--surface);color:var(--tx);padding:18px;max-width:min(92vw,440px);box-shadow:var(--shadow)}
+dialog::backdrop{background:rgba(0,0,0,.45)}
+.track{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;margin:12px 0}
+.track div{font-size:.72rem;text-align:center;color:var(--mut);border-top:4px solid var(--line);padding-top:6px}
+.track div.d{border-color:var(--sig);color:var(--tx)}
+.track div.c{border-color:var(--sig);opacity:.6}
+.track div.x{border-color:var(--bad);color:var(--bad)}
+.txbox{position:fixed;left:16px;right:16px;bottom:92px;z-index:55;max-width:560px;margin:0 auto}
+@media (min-width:640px){.stats{grid-template-columns:repeat(4,1fr)}.roles{grid-template-columns:repeat(3,1fr)}.how4{grid-template-columns:repeat(4,1fr)}.hero{grid-template-columns:1.2fr .8fr}}
+@media (min-width:1024px){body{padding-bottom:0}nav.tabs{display:none}.shell{display:grid;grid-template-columns:220px minmax(0,1fr);gap:8px}aside.side{display:block;padding:16px 8px 16px 16px;position:sticky;top:60px;align-self:start}main{padding:20px 16px 40px}.toast,.txbox{bottom:24px}}
+@media (max-width:480px){#net{display:none}}
+</style>
+<script>try{var m=localStorage.getItem("hl_theme");if(m)document.documentElement.setAttribute("data-theme",m);else if(matchMedia("(prefers-color-scheme: dark)").matches)document.documentElement.setAttribute("data-theme","dark")}catch(e){}</script>
+</head>
+<body>
+<header class="top"><div class="bar">
+<a class="logo" href="#/"><svg viewBox="0 0 32 32" aria-hidden="true"><path d="M10 14v-3a6 6 0 0112 0v3" fill="none" stroke="var(--sig)" stroke-width="2.6" stroke-linecap="round"/><rect x="5" y="14" width="22" height="14" rx="4" fill="var(--sig)"/><path d="M11.500 21l3 3 6-6.500" fill="none" stroke="var(--sig-ink)" stroke-width="2.600" stroke-linecap="round" stroke-linejoin="round"/></svg>HireLock</a>
+<div class="grow"></div>
+<button class="iconbtn" id="themebtn" aria-label="Toggle light and dark theme"><svg viewBox="0 0 24 24"><path d="M21 13A9 9 0 1111 3a7 7 0 0010 10z"/></svg></button>
+<button class="btn sm sec" id="wbtn">Connect</button>
+</div></header>
+<div class="shell"><aside class="side" id="side"></aside><main id="app"></main></div>
+<nav class="tabs"><div id="tabs"></div></nav>
+<div id="toast"></div><div id="tx"></div>
+<dialog id="dlg"></dialog>
+
+<script type="module">
+const GEN = 10n ** 18n;
+const DEFAULT_ADDRESS = "";
+const $ = (s, r = document) => r.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const safeStore = {
+  get(k) { try { return localStorage.getItem(k); } catch { return null; } },
+  set(k, v) { try { localStorage.setItem(k, v); } catch {} }
+};
+
+const S = { addr: null, account: null, client: null, readClient: null, sdk: null, busy: false, params: null };
+const qs = new URLSearchParams(location.search);
+{
+  const reqC = qs.get("contract") || qs.get("c");
+  if (reqC && /^0x[0-9a-fA-F]{40}$/.test(reqC) && reqC.toLowerCase() !== String(safeStore.get("hl_contract") || "").toLowerCase()) {
+    let ok = false;
+    try { ok = window.confirm("This link wants HireLock to use a different contract:\n" + reqC + "\n\nOnly continue if you trust whoever sent it. Anything you send goes to that contract."); } catch {}
+    if (ok) safeStore.set("hl_contract", reqC);
+  }
+}
+S.contract = safeStore.get("hl_contract") || DEFAULT_ADDRESS;
+const validAddr = a => /^0x[0-9a-fA-F]{40}$/.test(a || "");
+
+function toast(msg, kind = "") {
+  const t = $("#toast");
+  t.innerHTML = `<div class="toast ${kind}">${esc(msg)}</div>`;
+  clearTimeout(toast.t);
+  toast.t = setTimeout(() => t.innerHTML = "", kind === "err" ? 7000 : 3500);
+}
+const safeHref = u => /^https:\/\/[^\s"'<>\\]+$/.test(String(u)) ? esc(u) : "#";
+const short = a => a ? a.slice(0, 6) + "…" + a.slice(-4) : "";
+const fmtGen = v => {
+  const b = BigInt(v || 0);
+  const whole = b / GEN, frac = (b % GEN) * 100n / GEN;
+  return frac === 0n ? whole.toString() : `${whole}.${frac.toString().padStart(2, "0")}`.replace(/0$/, "");
+};
+const fmtTime = t => t ? new Date(t * 1000).toLocaleString([], { dateStyle: "medium", timeStyle: "short" }) : "—";
+const ago = t => {
+  if (!t) return "—";
+  const d = Math.floor(Date.now() / 1000) - t, a = Math.abs(d);
+  const u = a < 3600 ? [Math.max(1, Math.round(a / 60)), "min"] : a < 86400 ? [Math.round(a / 3600), "h"] : [Math.round(a / 86400), "d"];
+  return d >= 0 ? `${u[0]}${u[1]} ago` : `in ${u[0]}${u[1]}`;
+};
+const now = () => Math.floor(Date.now() / 1000);
+const STATUS = {
+  OPEN: ["Open", "pri"], PAYMENT_CLAIMED: ["Payment claimed", "warn"], ACTIVE: ["Awaiting delivery", "pri"],
+  DELIVERED: ["Work submitted", "pri"], COMPLETED: ["Completed", "ok"], DISPUTED: ["In dispute", "bad"],
+  REOPENED: ["Dispute reopened", "bad"], PAYOUT_PENDING: ["Payout pending", "warn"], CHALLENGED: ["Payout challenged", "bad"], RESOLVED: ["Resolved", "warn"], CANCELLED: ["Cancelled", ""], EXPIRED: ["Expired", ""]
+};
+const pill = s => { const [l, k] = STATUS[s] || [s, ""]; return `<span class="pill ${k}">${l}</span>`; };
+const levelPill = l => `<span class="pill ${l === "PREMIUM" ? "pri" : l === "VERIFIED" ? "ok" : ""}">${esc(l)}</span>`;
+
+async function loadSdk() {
+  if (S.sdk) return S.sdk;
+  const [lib, chains] = await Promise.all([
+    import("https://esm.sh/genlayer-js@latest"),
+    import("https://esm.sh/genlayer-js@latest/chains")
+  ]);
+  S.sdk = { createClient: lib.createClient, createAccount: lib.createAccount, generatePrivateKey: lib.generatePrivateKey, studionet: chains.studionet };
+  return S.sdk;
+}
+async function readClient() {
+  if (S.readClient) return S.readClient;
+  const sdk = await loadSdk();
+  S.readClient = sdk.createClient({ chain: sdk.studionet });
+  return S.readClient;
+}
+async function read(fn, args = []) {
+  if (!validAddr(S.contract)) throw new Error("Contract address is not set. Open Settings.");
+  const c = await readClient();
+  const out = await c.readContract({ address: S.contract, functionName: fn, args });
+  return out;
+}
+async function readJson(fn, args = []) {
+  const out = await read(fn, args);
+  if (out === "" || out == null) return null;
+  return typeof out === "string" ? JSON.parse(out) : out;
+}
+const CONFIRM_FNS = {
+  withdraw_stake: "Move this part of your stake to your claimable balance?",
+  claim: "Send your claimable balance to your wallet?",
+  respond_payment: "Answer this payment claim? Rejecting burns the client's claim deposit.",
+  challenge_payout: "Challenge the pending payout? The ruling is re-reviewed once.",
+  finalize_payout: "Release the pending payout to the client?",
+  close_stalled_dispute: "Close this dispute with no payout and return deposits?",
+  confirm_delivery: "Approve the submitted work? This completes the gig and cannot be undone.",
+  register_freelancer: "Register and lock this stake in the contract?",
+  add_stake: "Lock this extra stake in the contract?",
+  claim_payment: "Claim the payment and put down the claim deposit?",
+  open_dispute: "Open a dispute and put down the dispute deposit?"
+};
+function confirmBox(title, body) {
+  const d = $("#dlg");
+  d.innerHTML = `<h3>${esc(title)}</h3><p class="mut">${esc(body)}</p><div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn sec sm" value="no">Cancel</button><button class="btn sm" value="yes">Confirm</button></div>`;
+  return new Promise(res => {
+    d.onclose = () => res(d.returnValue === "yes");
+    d.onclick = e => { if (e.target === d) d.close("no"); };
+    for (const b of d.querySelectorAll("button")) b.onclick = () => d.close(b.value);
+    try { d.returnValue = ""; d.showModal(); } catch { res(window.confirm(title + "\n\n" + body)); }
+  });
+}
+function paintTrack(stage, fail) {
+  const names = ["Signature", "Submitted", "Accepted", "Finalized"];
+  $("#tx").innerHTML = stage < 0 ? "" : `<div class="card txbox"><div class="track">${names.map((n, i) => `<div class="${fail === i ? "x" : i < stage ? "d" : i === stage ? "c" : ""}">${n}</div>`).join("")}</div></div>`;
+}
+function explain(e) {
+  const m = String(e?.shortMessage || e?.message || e || "");
+  if (e?.code === 4001 || /user (rejected|denied)|rejected the request/i.test(m)) return "You declined the request in your wallet. Nothing was sent.";
+  if (/insufficient (funds|balance)/i.test(m)) return "Not enough GEN in this wallet for the amount plus fees.";
+  if (/chain|network/i.test(m) && /mismatch|switch|wrong|unrecognized/i.test(m)) return "Your wallet is on the wrong network. Switch to GenLayer Studio and try again.";
+  const r = m.match(/(?:Exception|Error|reverted)[^:]*:\s*(.+)$/is);
+  if (r) return "The contract refused this action: " + r[1].trim().slice(0, 200);
+  return m || "Transaction failed";
+}
+async function ensureNetwork() {
+  if (S.account && S.localKey) return true;
+  if (!window.ethereum) return true;
+  const sdk = await loadSdk();
+  const want = sdk.studionet?.id;
+  if (!want) return true;
+  const have = parseInt(await window.ethereum.request({ method: "eth_chainId" }), 16);
+  if (have === want) return true;
+  const ok = await confirmBox("Wrong network", "Your wallet is on another network. Switch to GenLayer Studio?");
+  if (!ok) return false;
+  const hex = "0x" + want.toString(16);
+  try { await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: hex }] }); return true; }
+  catch (e) {
+    try {
+      const c = sdk.studionet;
+      await window.ethereum.request({ method: "wallet_addEthereumChain", params: [{ chainId: hex, chainName: c.name || "GenLayer Studio", nativeCurrency: c.nativeCurrency, rpcUrls: c.rpcUrls?.default?.http || [] }] });
+      return true;
+    } catch (e2) { toast(explain(e2), "err"); return false; }
+  }
+}
+async function write(fn, args = [], value = 0n, okMsg = "Done") {
+  if (!S.account) { toast("Connect a wallet first", "err"); return null; }
+  if (S.busy) return null;
+  if (CONFIRM_FNS[fn] || value > 0n) {
+    const body = (CONFIRM_FNS[fn] || "This sends GEN to the contract.") + (value > 0n ? ` Amount: ${fmtGen(value)} GEN.` : "");
+    if (!(await confirmBox("Please confirm", body))) return null;
+  }
+  S.busy = true; document.body.classList.add("busy");
+  let stage = 0;
+  try {
+    if (!(await ensureNetwork())) return null;
+    if (value > 0n && window.ethereum && !S.localKey) {
+      try {
+        const bal = BigInt(await window.ethereum.request({ method: "eth_getBalance", params: [S.account, "latest"] }));
+        if (bal < value) { toast("Not enough GEN in this wallet. You need " + fmtGen(value) + " GEN plus fees.", "err"); return null; }
+      } catch {}
+    }
+    paintTrack(0);
+    const hash = await S.client.writeContract({ address: S.contract, functionName: fn, args, value });
+    stage = 1; paintTrack(1);
+    try {
+      await S.client.waitForTransactionReceipt({ hash, status: "ACCEPTED", retries: 120, interval: 3000 });
+      stage = 2; paintTrack(2);
+      await S.client.waitForTransactionReceipt({ hash, status: "FINALIZED", retries: 40, interval: 3000 });
+      stage = 3; paintTrack(3);
+    } catch (e) { console.warn(e); }
+    toast(okMsg, "good");
+    setTimeout(() => paintTrack(-1), 1500);
+    return hash;
+  } catch (e) {
+    paintTrack(stage, stage);
+    toast(explain(e), "err");
+    setTimeout(() => paintTrack(-1), 4000);
+    return null;
+  } finally { S.busy = false; document.body.classList.remove("busy"); }
+}
+
+async function connect() {
+  const hasWallet = !!window.ethereum;
+  const d = $("#dlg");
+  d.innerHTML = `<h3>Connect</h3>
+  <div class="row" style="flex-direction:column;align-items:stretch;gap:8px;margin-top:8px">
+  <button class="btn" id="cw" ${hasWallet ? "" : "disabled"}>Browser wallet${hasWallet ? "" : " (not found)"}</button>
+  <button class="btn sec" id="ck">Paste a test private key</button>
+  <button class="btn sec" id="ct">New test session (empty account)</button>
+  <button class="btn sec" id="cx">Cancel</button></div>
+  <p class="mut" style="font-size:.8rem">A private key stays in this tab only (never stored). Use test keys only.</p>`;
+  const close = () => d.close();
+  d.onclose = null; d.onclick = null;
+  try { d.showModal(); } catch {}
+  $("#cx").onclick = close;
+  $("#cw").onclick = async () => { close(); await connectWallet(); };
+  $("#ct").onclick = async () => { close(); const sdk = await loadSdk(); await useKey(sdk.generatePrivateKey()); toast("Test session started. It has no funds yet.", "good"); };
+  $("#ck").onclick = async () => {
+    close();
+    const k = window.prompt("Paste a TEST private key (0x…). Never use a key that holds real funds.");
+    if (!k) return;
+    if (!/^0x[0-9a-fA-F]{64}$/.test(k.trim())) return toast("That is not a valid private key", "err");
+    await useKey(k.trim());
+  };
+}
+async function useKey(pk) {
+  try {
+    const sdk = await loadSdk();
+    const acct = sdk.createAccount(pk);
+    S.account = acct.address; S.localKey = true;
+    S.client = sdk.createClient({ chain: sdk.studionet, account: acct });
+    paintWallet(); route();
+  } catch (e) { toast(explain(e), "err"); }
+}
+async function connectWallet() {
+  if (!window.ethereum) { toast("No wallet found. Open this page in a wallet browser.", "err"); return; }
+  try {
+    const [a] = await window.ethereum.request({ method: "eth_requestAccounts" });
+    S.account = a; S.localKey = false;
+    const sdk = await loadSdk();
+    S.client = sdk.createClient({ chain: sdk.studionet, account: a });
+    safeStore.set("hl_auto", "1");
+    paintWallet();
+    route();
+  } catch (e) { toast(explain(e), "err"); }
+}
+function paintWallet() {
+  const b = $("#wbtn");
+  b.textContent = S.account ? short(S.account) : "Connect";
+  b.onclick = S.account ? () => (location.hash = "#/me") : connect;
+}
+$("#themebtn").onclick = () => {
+  const cur = document.documentElement.getAttribute("data-theme") === "dark" ? "dark" : "light";
+  const nx = cur === "dark" ? "light" : "dark";
+  document.documentElement.setAttribute("data-theme", nx);
+  safeStore.set("hl_theme", nx);
+};
+
+const ICON = {
+  home: '<svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 01-1 1h-5v-6H9v6H4a1 1 0 01-1-1z"/></svg>',
+  shield: '<svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.500 8-8 9-4.500-1-8-4-8-9V6z"/></svg>',
+  plus: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>',
+  user: '<svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>',
+  info: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.500v.5"/></svg>'
+};
+function paintTabs(h) {
+  const items = [["#/", "Gigs", ICON.home], ["#/freelancers", "Freelancers", ICON.shield], ["#/new", "New gig", ICON.plus], ["#/me", "Me", ICON.user], ["#/how", "How it works", ICON.info]];
+  const html = items.map(([href, l, i]) => `<a href="${href}" class="${h === href || (href !== "#/" && h.startsWith(href)) ? "on" : ""}">${i}${l}</a>`).join("");
+  $("#tabs").innerHTML = html;
+  $("#side").innerHTML = html;
+}
+
+const view = html => { $("#app").innerHTML = html; window.scrollTo(0, 0); };
+const skeleton = () => view('<div class="sk"></div><div class="sk"></div><div class="sk"></div>');
+const errBox = e => view(`<div class="card"><b>Could not load</b><p class="mut word">${esc(e?.message || e)}</p><a class="btn sm" href="#/settings">Settings</a></div>`);
+
+function gigCard(d) {
+  return `<a class="card" href="#/gig/${esc(d.gig_id)}">
+    <div class="row between"><b class="word">${esc(d.scope)}</b>${pill(d.status)}</div>
+    <div class="row between mut" style="margin-top:6px"><span>${esc(d.fee_text)}</span><span>Covered <b style="color:var(--teal)">${fmtGen(d.cover)} GEN</b></span></div>
+    <div class="mut" style="font-size:.85rem;margin-top:4px">by <span class="mono">${esc(short(d.freelancer))}</span> · ${ago(d.created_at)}</div></a>`;
+}
+function freelancerCard(s) {
+  return `<a class="card" href="#/freelancer/${esc(s.handle)}">
+    <div class="row between"><b>@${esc(s.handle)}</b>${levelPill(s.level)}</div>
+    <div class="row" style="margin-top:8px"><div class="grow"><div class="meter"><i style="width:${s.score / 10}%"></i></div></div><b>${s.score}</b></div>
+    <div class="mut" style="font-size:.85rem;margin-top:6px">Can cover up to <b style="color:var(--teal)">${fmtGen(s.available_coverage)} GEN</b> now · ${s.completed_verified + s.completed_auto} completed · ${s.disputes_lost} lost</div></a>`;
+}
+
+const ART = '<svg class="art" viewBox="0 0 320 220" aria-hidden="true"><rect x="16" y="30" width="136" height="156" rx="14" fill="var(--surface)" stroke="var(--line)"/><rect x="32" y="48" width="70" height="10" rx="5" fill="var(--sig-soft)"/><rect x="32" y="70" width="104" height="7" rx="3.500" fill="var(--line)"/><rect x="32" y="84" width="84" height="7" rx="3.500" fill="var(--line)"/><circle cx="40" cy="112" r="7" fill="var(--org-soft)" stroke="var(--org)" stroke-width="1.800"/><path d="M36.500 112l2.500 2.500 4.500-5" fill="none" stroke="var(--org)" stroke-width="1.800" stroke-linecap="round"/><rect x="54" y="109" width="70" height="6" rx="3" fill="var(--line)"/><circle cx="40" cy="134" r="7" fill="var(--org-soft)" stroke="var(--org)" stroke-width="1.800"/><path d="M36.500 134l2.500 2.500 4.500-5" fill="none" stroke="var(--org)" stroke-width="1.800" stroke-linecap="round"/><rect x="54" y="131" width="56" height="6" rx="3" fill="var(--line)"/><circle cx="40" cy="156" r="7" fill="none" stroke="var(--line)" stroke-width="1.800"/><rect x="54" y="153" width="62" height="6" rx="3" fill="var(--line)"/><path d="M158 108h14" stroke="var(--mut)" stroke-width="2" stroke-dasharray="3 4" stroke-linecap="round"/><path d="M168 103l6 5-6 5" fill="none" stroke="var(--mut)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><rect x="180" y="52" width="124" height="104" rx="14" fill="var(--surface)" stroke="var(--line)"/><rect x="194" y="66" width="96" height="48" rx="8" fill="var(--acc-soft)"/><path d="M194 106l26-24 18 16 14-10 38 18v8a8 8 0 01-8 8h-80a8 8 0 01-8-8z" fill="var(--acc)" opacity=".28"/><circle cx="270" cy="82" r="7" fill="var(--acc)" opacity=".5"/><rect x="194" y="126" width="64" height="7" rx="3.500" fill="var(--line)"/><rect x="194" y="140" width="40" height="7" rx="3.500" fill="var(--line)"/><path d="M236 146v-9a16 16 0 0132 0v9" fill="none" stroke="var(--sig)" stroke-width="5" stroke-linecap="round"/><rect x="226" y="146" width="52" height="40" rx="10" fill="var(--sig)"/><circle cx="252" cy="162" r="5" fill="var(--sig-ink)"/><rect x="249.500" y="164" width="5" height="11" rx="2.500" fill="var(--sig-ink)"/><circle cx="48" cy="194" r="16" fill="var(--sig-soft)" stroke="var(--sig)" stroke-width="2"/><text x="48" y="198" text-anchor="middle" font-size="10" font-weight="700" fill="var(--sig)">GEN</text></svg>';
+const RICON = {
+  client: '<svg viewBox="0 0 24 24"><path d="M6 3h8l4 4v14H6z"/><path d="M14 3v4h4M9 14l2 2 4-4"/></svg>',
+  freelancer: '<svg viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="11" rx="1.500"/><path d="M2 20h20M9 9l-2 2 2 2M15 9l2 2-2 2"/></svg>',
+  court: '<svg viewBox="0 0 24 24"><path d="M12 4v16M6 8h12M6 8l-3 7h6zM18 8l-3 7h6z"/></svg>'
+};
+function feedItems(gigs) {
+  const ev = [];
+  for (const d of gigs) {
+    if (d.created_at) ev.push([d.created_at, `Offer created: <b class="word">${esc(d.scope)}</b>`, d.gig_id]);
+    if (d.dispute_opened_at) ev.push([d.dispute_opened_at, `Dispute opened on <b class="word">${esc(d.scope)}</b>`, d.gig_id]);
+    if (d.resolved_at) ev.push([d.resolved_at, `${esc(String(d.outcome || d.status).replace(/_/g, " ").toLowerCase())}: <b class="word">${esc(d.scope)}</b>`, d.gig_id]);
+  }
+  ev.sort((a, b) => b[0] - a[0]);
+  return ev.slice(0, 8);
+}
+async function pageHome() {
+  skeleton();
+  const [list, params, freelancers, acc] = await Promise.all([readJson("list_gigs", [0, 30]), getParams(), readJson("list_freelancers").catch(() => null), readJson("get_accounting").catch(() => null)]);
+  const open = list.gigs.filter(d => d.status === "OPEN");
+  const resolved = list.gigs.filter(d => d.status === "RESOLVED").length;
+  const completed = list.gigs.filter(d => d.status === "COMPLETED").length;
+  const staked = acc ? fmtGen(acc.stakes) : "—";
+  const feed = feedItems(list.gigs);
+  const tracked = acc ? `Tracked: ${fmtGen(acc.stakes)} GEN stakes · ${fmtGen(acc.claimable)} claimable · ${fmtGen(acc.deposits_held)} deposits` : "";
+  view(`<span class="live on"><i></i>Live on GenLayer Studio</span>
+  <section class="hero"><div>
+    <h1>Hire freelancers who put money behind their word.</h1>
+    <p class="lede">Pay the freelancer the way you always do. If the work does not match the agreed scope, their locked stake pays you back. Disputes are judged on-chain from the evidence both sides submit.</p>
+    <div class="row"><a class="btn" href="#/become">Become a freelancer</a><a class="btn sec" href="#/how">How it works</a></div>
+  </div>${ART}</section>
+  <div class="stats">
+    <div class="stat"><b>${open.length}</b><span>Open offers</span><small>${list.gigs.length} gigs loaded</small></div>
+    <div class="stat"><b>${freelancers ? freelancers.length : "—"}</b><span>Staked freelancers</span><small>${staked} GEN locked in stakes</small></div>
+    <div class="stat"><b>${completed}</b><span>Completed gigs</span><small>client-confirmed or auto</small></div>
+    <div class="stat"><b>${resolved}</b><span>Disputes resolved</span><small>by validator consensus</small></div>
+  </div>
+  <h2>What do you want to do?</h2>
+  <div class="chips"><a class="chip" href="#/">Hire from an open offer</a><a class="chip" href="#/become">Offer work with a stake</a><a class="chip" href="#/me">Follow up a dispute</a></div>
+  <div class="roles">
+    <a class="role" href="#/"><span class="tile">${RICON.client}</span><span><b>Client</b><br><span class="mut">Find covered freelancers</span></span><span class="arrow">›</span></a>
+    <a class="role" href="#/become"><span class="tile a">${RICON.freelancer}</span><span><b>Freelancer</b><br><span class="mut">Lock a stake, list gigs</span></span><span class="arrow">›</span></a>
+    <a class="role" href="#/me"><span class="tile o">${RICON.court}</span><span><b>Disputes</b><br><span class="mut">Evidence and rulings</span></span><span class="arrow">›</span></a>
+  </div>
+  <h2>Live contract activity</h2>
+  <div class="card feed">${feed.length ? feed.map(([t, txt, id]) => `<div class="item"><span class="dot"></span><div class="grow"><a href="#/gig/${esc(id)}" style="color:var(--tx)">${txt}</a><div class="mut" style="font-size:.8rem">${ago(t)}</div></div></div>`).join("") : '<div class="empty">No activity yet.</div>'}
+  ${tracked ? `<div class="mut" style="font-size:.8rem;margin-top:8px">${esc(tracked)}</div>` : ""}</div>
+  <details class="card"><summary>How it works in four steps</summary><div class="how4" style="margin-top:10px">
+    <div class="card"><span class="n">1</span><h3>Stake</h3><span class="mut">The freelancer locks GEN.</span></div>
+    <div class="card"><span class="n">2</span><h3>Pay</h3><span class="mut">The client pays off-chain and claims.</span></div>
+    <div class="card"><span class="n">3</span><h3>Deliver</h3><span class="mut">Work submitted, then approved.</span></div>
+    <div class="card"><span class="n">4</span><h3>Dispute</h3><span class="mut">Evidence, then consensus.</span></div></div></details>
+  <h2>Open offers <span class="mut">(${open.length})</span></h2>
+  ${open.length ? open.map(gigCard).join("") : '<div class="empty">No open offers yet.</div>'}
+  <h2>Latest gigs</h2>
+  ${list.gigs.filter(d => d.status !== "OPEN").slice(0, 6).map(gigCard).join("") || '<div class="empty">Nothing yet.</div>'}`);
+}
+async function getParams() {
+  if (!S.params) S.params = await readJson("get_params");
+  return S.params;
+}
+
+async function pageFreelancers() {
+  skeleton();
+  const list = await readJson("list_freelancers");
+  list.sort((a, b) => b.score - a.score);
+  view(`<h1>Freelancers</h1><p class="mut">Ranked by reputation score. A stake is real GEN locked in the contract.</p>
+  ${list.length ? list.map(freelancerCard).join("") : '<div class="empty">No freelancers yet. Be the first.</div>'}`);
+}
+
+async function pageFreelancer(key) {
+  skeleton();
+  const [s, gigs] = await Promise.all([readJson("get_freelancer", [key]), readJson("gigs_of", [key])]);
+  if (!s) return view('<div class="empty">Freelancer not found.</div>');
+  const mine = S.account && S.account.toLowerCase() === s.owner;
+  view(`<div class="row between"><h1>@${esc(s.handle)}</h1>${levelPill(s.level)}</div>
+  <div class="mut" style="font-size:.8rem">Self-declared handle. It is not a verified account — check the wallet address.</div>
+  <div class="mut mono word">${esc(s.owner)}</div>
+  <div class="card"><div class="row"><div class="grow"><div class="meter"><i style="width:${s.score / 10}%"></i></div></div><b style="font-size:1.4rem">${s.score}</b></div>
+  <div class="mut" style="font-size:.8rem">Reputation score (0–1000)${s.trusted ? " · trusted lock ratio" : ""}</div></div>
+  <div class="grid">
+    <div class="stat"><b>${fmtGen(s.stake)} GEN</b><span>Total stake</span></div>
+    <div class="stat"><b>${fmtGen(s.locked)} GEN</b><span>Locked in gigs</span></div>
+    <div class="stat"><b style="color:var(--teal)">${fmtGen(s.available_coverage)} GEN</b><span>Can cover now</span></div>
+    <div class="stat"><b>${s.active_gigs}</b><span>Active gigs</span></div>
+    <div class="stat"><b>${s.completed_verified}</b><span>Client-confirmed</span></div>
+    <div class="stat"><b>${s.completed_auto}</b><span>Auto-completed</span></div>
+    <div class="stat"><b>${s.disputes_won} / ${s.disputes_split} / ${s.disputes_lost}</b><span>Disputes won / split / lost</span></div>
+    <div class="stat"><b>${s.rejected_claims}</b><span>Payment claims rejected</span></div>
+  </div>
+  ${mine ? `<h2>Manage stake</h2><div class="card"><label>Add stake (whole GEN)</label><input id="addb" type="number" min="1" step="1" inputmode="numeric"><button class="btn block" style="margin-top:10px" id="addbtn">Add stake</button>
+  <label>Withdraw (whole GEN, free stake only)</label><input id="wdb" type="number" min="1" step="1" inputmode="numeric"><button class="btn sec block" style="margin-top:10px" id="wdbtn">Withdraw</button></div>` : ""}
+  <h2>Gigs</h2>${gigs.length ? gigs.map(gigCard).join("") : '<div class="empty">No gigs yet.</div>'}
+  <p class="mut" style="font-size:.8rem">The handle is a self-declared label (Upwork, Fiverr, GitHub, Telegram or any name). HireLock does not verify account ownership.</p>`);
+  if (mine) {
+    $("#addbtn").onclick = async () => {
+      const n = parseInt($("#addb").value, 10); if (!(n > 0)) return toast("Enter a whole number", "err");
+      if (await write("add_stake", [], BigInt(n) * GEN, "Stake added")) route();
+    };
+    $("#wdbtn").onclick = async () => {
+      const n = parseInt($("#wdb").value, 10); if (!(n > 0)) return toast("Enter a whole number", "err");
+      if (await write("withdraw_stake", [BigInt(n) * GEN], 0n, "Moved to your claimable balance")) route();
+    };
+  }
+}
+
+function stepper(d) {
+  const order = ["OPEN", "PAYMENT_CLAIMED", "ACTIVE", "DELIVERED", "COMPLETED"];
+  let idx = order.indexOf(d.status);
+  if (["DISPUTED", "REOPENED", "PAYOUT_PENDING", "CHALLENGED", "RESOLVED"].includes(d.status)) idx = 4;
+  if (["CANCELLED", "EXPIRED"].includes(d.status)) idx = -1;
+  return `<div class="steps">${order.map((_, i) => `<i class="${i < idx ? "d" : i === idx ? "c" : ""}"></i>`).join("")}</div>`;
+}
+
+async function pageGig(id) {
+  skeleton();
+  const [d, p] = await Promise.all([readJson("get_gig", [id]), getParams()]);
+  if (!d) return view('<div class="empty">Gig not found.</div>');
+  const ev = ["DISPUTED", "REOPENED", "PAYOUT_PENDING", "CHALLENGED", "RESOLVED"].includes(d.status) ? await readJson("get_evidence", [id]) : [];
+  const me = (S.account || "").toLowerCase();
+  const isFreelancer = me && me === d.freelancer, isClient = me && me === d.client;
+  const t = now();
+  let info = "", actions = "";
+  if (d.status === "OPEN") {
+    info = `Offer open until ${fmtTime(d.offer_expires)}.`;
+    if (isFreelancer) actions = `<button class="btn sec block" id="cancel">Cancel offer</button>`;
+    else if (t > d.offer_expires) actions = `<button class="btn sec block" id="expire">Release expired offer</button>`;
+    else actions = `<div class="warn-box">Pay the freelancer off-chain first (bank, card, whatever they use). Then paste your payment reference here.</div>
+      <label>Payment reference</label><input id="pref" maxlength="300" placeholder="Transfer ID, receipt number, last digits…">
+      <div class="warn-box" style="margin-top:8px">Claiming needs a deposit of exactly ${fmtGen(p.claim_deposit)} GEN. You get it back when the gig completes. If the freelancer rejects the claim, it is burned (paid to nobody).</div>
+      <button class="btn block" style="margin-top:10px" id="claimpay">I paid — claim payment (${fmtGen(p.claim_deposit)} GEN deposit)</button>`;
+  } else if (d.status === "PAYMENT_CLAIMED") {
+    const dl = d.claimed_at + p.confirm_window;
+    info = `Payment reference: <span class="mono word">${esc(d.payment_ref)}</span><br>Freelancer must answer by ${fmtTime(dl)}. If they stay silent the gig binds automatically.`;
+    if (isFreelancer) actions = `<button class="btn block" id="accept">Payment received — accept</button>
+      <label>Or reject (reason)</label><input id="rrs" maxlength="200" placeholder="Why this payment is not valid"><button class="btn sec block" style="margin-top:10px" id="reject">Reject claim</button>`;
+    else if (t >= dl) actions = `<button class="btn block" id="timeout">Bind gig (freelancer silent)</button>`;
+  } else if (d.status === "ACTIVE") {
+    info = `Bound by ${esc(d.bound_by)}. Delivery deadline ${fmtTime(d.delivery_deadline)} (${ago(d.delivery_deadline)}).${d.bound_by === "timeout" ? '<br><span class="pill warn">Freelancer never confirmed payment</span> Compensation is capped at 25% of the covered amount and needs reviewed payment proof.' : ""}`;
+    if (isFreelancer) actions = `<label>Submitted work (what you built and where to find it)</label><textarea id="dtx" maxlength="1500"></textarea>
+      <label>Work link (https, optional)</label><input id="dur" maxlength="300" placeholder="https://…">
+      <button class="btn block" style="margin-top:10px" id="deliver">Submit delivery</button>`;
+    if (isClient && t > d.delivery_deadline && t <= d.delivery_deadline + p.review_window)
+      actions += disputeForm(p);
+    if (t > d.delivery_deadline + p.review_window) actions += `<button class="btn sec block" style="margin-top:10px" id="finalize">Close lapsed gig</button>`;
+  } else if (d.status === "DELIVERED") {
+    const rv = d.delivered_at + p.review_window;
+    info = `Freelancer submitted the work ${ago(d.delivered_at)}.<br><span class="word">${esc(d.delivery_text)}</span>${d.delivery_url ? `<br><a href="${safeHref(d.delivery_url)}" target="_blank" rel="noopener noreferrer">Proof link</a>` : ""}<br>Client can confirm or dispute until ${fmtTime(rv)}.`;
+    if (isClient && t <= rv) actions = `<button class="btn block" id="confirm">The work looks good — approve</button>` + disputeForm(p);
+    else if (t > rv) actions = `<button class="btn sec block" id="finalize">Complete gig (review window ended)</button>`;
+  } else if (d.status === "PAYOUT_PENDING") {
+    info = `<b>Ruling: ${esc(d.verdict.replace("_", " "))}</b> (payment was never confirmed by the freelancer)<br><span class="word">${esc(d.reason)}</span><br>Pending payout ${fmtGen(d.pending_comp)} GEN. It unlocks ${fmtTime(d.unlock_at)} (${ago(d.unlock_at)}). The freelancer can challenge until then.`;
+    if (isFreelancer && t < d.unlock_at) actions = `<label>Challenge: why was payment never received?</label><textarea id="ctx" maxlength="1500"></textarea>
+      <label>Work link (https, optional)</label><input id="cur" maxlength="300"><button class="btn block" style="margin-top:10px" id="challenge">Challenge payout</button>`;
+    else if (t >= d.unlock_at) actions = `<button class="btn block" id="finpay">Release payout</button>`;
+  } else if (d.status === "DISPUTED" || d.status === "REOPENED" || d.status === "CHALLENGED") {
+    info = `Evidence closes ${fmtTime(d.evidence_deadline)} (${ago(d.evidence_deadline)}).${d.status === "REOPENED" ? "<br>The first review found too little evidence. Both sides get one more chance." : d.status === "CHALLENGED" ? "<br>The freelancer challenged the pending payout. The ruling will be re-reviewed and, if it still favors the client, paid out immediately (still capped)." : ""}`;
+    if (t <= d.evidence_deadline && (isClient || isFreelancer)) actions = `<label>Add evidence</label><textarea id="etx" maxlength="1500"></textarea>
+      <label>Evidence link (https, optional)</label><input id="eur" maxlength="300"><button class="btn block" style="margin-top:10px" id="addev">Submit evidence</button>`;
+    if (t > d.evidence_deadline) actions = `<button class="btn block" id="resolve">Run arbitration</button><p class="mut" style="font-size:.85rem">Anyone can trigger this. Validators will read the frozen evidence and reach consensus.</p>`;
+    if (t > d.evidence_deadline + p.stall_window) actions += `<button class="btn sec block" style="margin-top:10px" id="stalled">Arbitration stalled — close with no payout</button>`;
+  } else if (d.status === "RESOLVED") {
+    info = `<b>${esc(d.outcome.replace("_", " "))}</b>${d.reason ? `<br><span class="word">${esc(d.reason)}</span>` : ""}<br>Reason code: <span class="mono">${esc(d.reason_code)}</span><br>Compensation ${fmtGen(d.compensation)} GEN · fee ${fmtGen(d.fee)} GEN${d.bound_by === "timeout" ? `<br>Payment unconfirmed by freelancer · cap ${d.comp_cap_bps / 100}% · payment evidence reviewed: ${d.payment_reviewed ? "yes" : "no"}` : ""}`;
+  } else if (d.status === "COMPLETED") info = d.outcome === "CONFIRMED" ? "Client approved the work." : "Completed automatically after the review window.";
+  else info = esc(d.outcome);
+
+  view(`<div class="row between"><a href="#/" class="mut">← Gigs</a>${pill(d.status)}</div>
+  <h1 class="word">${esc(d.scope)}</h1>
+  ${stepper(d)}
+  <div class="grid">
+    <div class="stat"><b>${esc(d.fee_text)}</b><span>Fee (display only)</span></div>
+    <div class="stat"><b style="color:var(--teal)">${fmtGen(d.cover)} GEN</b><span>Covered amount</span></div>
+  </div>
+  <div class="warn-box" style="font-size:.85rem">Only the covered amount is protected, not the fee. The fee text is not enforced by the contract.</div>
+  <div class="card word">${info || ""}</div>
+  <div class="card"><div class="row between"><span class="mut">Freelancer</span><a class="mono" href="#/freelancer/${esc(d.freelancer)}">${esc(short(d.freelancer))}</a></div>
+  ${d.client ? `<div class="row between"><span class="mut">Client</span><span class="mono">${esc(short(d.client))}</span></div>` : ""}
+  <div class="row between"><span class="mut">Stake locked</span><span>${fmtGen(d.lock)} GEN</span></div>
+  <div class="row between"><span class="mut">Delivery window</span><span>${Math.round(d.delivery_secs / p.unit)} h</span></div>
+  ${d.brief_url ? `<div class="row between"><span class="mut">Brief</span><a href="${safeHref(d.brief_url)}" target="_blank" rel="noopener noreferrer">open</a></div>` : ""}
+  ${d.rejections ? `<div class="row between"><span class="mut">Earlier claims rejected</span><span>${d.rejections}</span></div>` : ""}</div>
+  ${actions ? `<div class="card">${actions}</div>` : ""}
+  ${ev.length ? `<h2>Evidence on record</h2>${ev.map(e => `<div class="ev ${esc(e.side)}"><b>${esc(e.side)}</b> <span class="mut">${ago(e.at)}</span><div>${esc(e.text)}</div>${e.url ? `<a href="${safeHref(e.url)}" target="_blank" rel="noopener noreferrer" class="word">${esc(e.url)}</a>` : ""}<div class="mono mut" style="font-size:.7rem">sha256 ${esc(e.digest.slice(0, 16))}…</div></div>`).join("")}` : ""}`);
+
+  const on = (sel, fn) => { const el = $(sel); if (el) el.onclick = fn; };
+  const go = async (fn, args, val, msg) => { if (await write(fn, args, val, msg)) route(); };
+  on("#cancel", () => go("cancel_gig", [id], 0n, "Offer cancelled"));
+  on("#expire", () => go("expire_offer", [id], 0n, "Offer released"));
+  on("#claimpay", () => { const v = $("#pref").value.trim(); if (v.length < 5) return toast("Add a payment reference (5+ characters)", "err"); go("claim_payment", [id, v], BigInt(p.claim_deposit), "Payment claimed"); });
+  on("#accept", () => go("respond_payment", [id, true, ""], 0n, "Gig is now binding"));
+  on("#reject", () => { const v = $("#rrs").value.trim(); if (v.length < 5) return toast("Give a short reason", "err"); go("respond_payment", [id, false, v], 0n, "Claim rejected"); });
+  on("#timeout", () => go("bind_by_timeout", [id], 0n, "Gig is now binding"));
+  on("#deliver", () => { const v = $("#dtx").value.trim(); if (v.length < 3) return toast("Describe the delivery", "err"); go("submit_delivery", [id, v, $("#dur").value.trim()], 0n, "Delivery submitted"); });
+  on("#confirm", () => go("confirm_delivery", [id], 0n, "Thanks — gig completed"));
+  on("#finalize", () => go("finalize_gig", [id], 0n, "Gig closed"));
+  on("#dispute", () => {
+    const v = $("#dcl").value.trim(); if (v.length < 10) return toast("Describe the problem (10+ characters)", "err");
+    go("open_dispute", [id, v, $("#dur2").value.trim()], BigInt(p.dispute_deposit), "Dispute opened");
+  });
+  on("#addev", () => { const v = $("#etx").value.trim(); if (v.length < 5) return toast("Write the evidence (5+ characters)", "err"); go("submit_evidence", [id, v, $("#eur").value.trim()], 0n, "Evidence recorded"); });
+  on("#resolve", () => go("resolve_dispute", [id], 0n, "Arbitration finished"));
+  on("#challenge", () => { const v = $("#ctx").value.trim(); if (v.length < 5) return toast("Explain the challenge (5+ characters)", "err"); go("challenge_payout", [id, v, $("#cur").value.trim()], 0n, "Payout challenged"); });
+  on("#finpay", () => go("finalize_payout", [id], 0n, "Payout released"));
+  on("#stalled", () => go("close_stalled_dispute", [id], 0n, "Dispute closed, deposit returned"));
+}
+function disputeForm(p) {
+  return `<details style="margin-top:12px"><summary>The work does not match the scope — open a dispute</summary>
+  <div class="warn-box" style="margin-top:8px">Needs a deposit of exactly ${fmtGen(p.dispute_deposit)} GEN. You get it back unless the verdict is FREELANCER_WINS. If the freelancer never confirmed your payment, include proof of payment in your claim; compensation is then capped at 25%.</div>
+  <label>What happened?</label><textarea id="dcl" maxlength="1500"></textarea>
+  <label>Evidence link (https, optional)</label><input id="dur2" maxlength="300">
+  <button class="btn block" style="margin-top:10px" id="dispute">Open dispute</button></details>`;
+}
+
+async function pageNew() {
+  const p = await getParams();
+  let freelancer = null;
+  if (S.account) freelancer = await readJson("get_freelancer", [S.account.toLowerCase()]).catch(() => null);
+  if (!S.account) return view(`<h1>New gig</h1><div class="card"><p>Connect a wallet to create an offer.</p><button class="btn" id="c2">Connect</button></div>`), $("#c2").onclick = connect;
+  if (!freelancer) return view(`<h1>New gig</h1><div class="card"><p>You need to be a registered freelancer first.</p><a class="btn" href="#/become">Become a freelancer</a></div>`);
+  view(`<h1>New gig</h1>
+  <div class="card"><div class="row between"><span class="mut">You can cover up to</span><b style="color:var(--teal)">${fmtGen(freelancer.available_coverage)} GEN</b></div>
+  <div class="mut" style="font-size:.85rem">Stake locked per gig: ${freelancer.lock_bps / 100}% of the covered amount.</div></div>
+  <label>Scope of work (what exactly you will deliver)</label><textarea id="scope" maxlength="600" placeholder="Landing page design in Figma: hero, pricing and footer sections, two revision rounds, handoff as a Figma link."></textarea>
+  <label>Fee (shown to the client, e.g. “400 USD”)</label><input id="price" maxlength="80">
+  <label>Brief link (https, optional)</label><input id="lurl" maxlength="300" placeholder="https://…">
+  <label>Covered amount (whole GEN)</label><input id="prot" type="number" min="1" step="1" inputmode="numeric">
+  <label>Delivery time (hours)</label><input id="hrs" type="number" min="1" max="720" step="1" value="72" inputmode="numeric">
+  <button class="btn block" style="margin-top:16px" id="create">Create offer</button>`);
+  $("#create").onclick = async () => {
+    const scope = $("#scope").value.trim(), price = $("#price").value.trim();
+    const prot = parseInt($("#prot").value, 10), hrs = parseInt($("#hrs").value, 10);
+    if (scope.length < 10 || !price || !(prot >= 1) || !(hrs >= 1)) return toast("Fill every required field", "err");
+    if (await write("create_gig", [scope, price, $("#lurl").value.trim(), BigInt(prot) * GEN, BigInt(hrs)], 0n, "Offer created")) location.hash = "#/freelancer/" + freelancer.handle;
+  };
+}
+
+async function pageBecome() {
+  const p = await getParams();
+  view(`<h1>Become a <span class="sig">staked</span> freelancer</h1>
+  <p class="mut">Lock GEN as a stake. If you fail to deliver and lose a dispute, clients are paid from it.</p>
+  <div class="card">
+  <div class="row between"><span>STARTER</span><span class="mut">${fmtGen(p.min_stake)}+ GEN · up to ${fmtGen(p.max_cover[0])} GEN per gig</span></div>
+  <div class="row between"><span>VERIFIED</span><span class="mut">${fmtGen(p.verified_stake)}+ GEN · up to ${fmtGen(p.max_cover[1])} GEN</span></div>
+  <div class="row between"><span>PREMIUM</span><span class="mut">${fmtGen(p.premium_stake)}+ GEN · up to ${fmtGen(p.max_cover[2])} GEN</span></div></div>
+  <label>Handle (letters, numbers, _ and .; 3–30)</label><input id="handle" maxlength="30" autocapitalize="none" placeholder="my_studio">
+  <label>Stake (whole GEN)</label><input id="stake" type="number" min="${fmtGen(p.min_stake)}" step="1" inputmode="numeric" value="${fmtGen(p.min_stake)}">
+  <div class="warn-box" style="margin-top:12px">Your handle is a label you choose. HireLock does not prove you own the Upwork, Fiverr, GitHub or Telegram account with that name.</div>
+  <button class="btn block" style="margin-top:14px" id="reg">Register and lock stake</button>`);
+  $("#reg").onclick = async () => {
+    const h = $("#handle").value.trim().toLowerCase();
+    const n = parseInt($("#stake").value, 10);
+    if (!/^[a-z0-9_.]{3,30}$/.test(h)) return toast("Invalid handle", "err");
+    if (!(n >= Number(BigInt(p.min_stake) / GEN))) return toast("Stake is below the minimum", "err");
+    if (await write("register_freelancer", [h], BigInt(n) * GEN, "Registered")) location.hash = "#/freelancer/" + h;
+  };
+}
+
+async function pageMe() {
+  if (!S.account) { view(`<h1>Me</h1><div class="card"><p>Connect a wallet to see your gigs and balance.</p><button class="btn" id="c3">Connect</button></div>`); $("#c3").onclick = connect; return; }
+  skeleton();
+  const a = S.account.toLowerCase();
+  const [cl, freelancer, gigs] = await Promise.all([read("get_claimable", [a]), readJson("get_freelancer", [a]).catch(() => null), readJson("gigs_of", [a])]);
+  const amt = BigInt(cl || 0);
+  view(`<h1>Me</h1><div class="mono mut word">${esc(S.account)}</div>
+  <div class="card"><div class="row between"><div><div class="mut">Claimable balance</div><b style="font-size:1.5rem">${fmtGen(amt)} GEN</b></div>
+  <button class="btn" id="claim" ${amt === 0n ? "disabled" : ""}>Claim</button></div></div>
+  ${freelancer ? freelancerCard(freelancer) : `<a class="btn sec block" href="#/become">Become a freelancer</a>`}
+  <h2>My gigs</h2>${gigs.length ? gigs.map(gigCard).join("") : '<div class="empty">No gigs yet.</div>'}
+  <p><a href="#/settings">Settings</a></p>`);
+  $("#claim").onclick = async () => { if (await write("claim", [], 0n, "Sent to your wallet")) route(); };
+}
+
+async function pageHow() {
+  const p = await getParams().catch(() => null);
+  const h = t => Math.round(t / (p?.unit || 3600));
+  view(`<h1>How HireLock works</h1>
+  <div class="card"><b>1. Freelancer posts a stake</b><p class="mut">GEN is locked in the contract. The stake sets how much value one freelancer can cover.</p></div>
+  <div class="card"><b>2. Freelancer lists a covered gig</b><p class="mut">A part of the stake (${p ? p.lock_bps_new / 100 : 150}% of the covered amount, less for proven freelancers) stays locked until the gig ends.</p></div>
+  <div class="card"><b>3. Client pays off-chain, then claims</b><p class="mut">Pay by bank transfer, cash app or anything the freelancer accepts. Paste the payment reference. The freelancer can accept or reject. If they stay silent for ${p ? h(p.confirm_window) : 24} h, the gig binds anyway.</p></div>
+  <div class="card"><b>4. Delivery</b><p class="mut">The freelancer submits the finished work (a link and a note). The client approves it, or after ${p ? h(p.review_window) : 72} h it completes on its own.</p></div>
+  <div class="card"><b>5. Dispute</b><p class="mut">The client puts down a ${p ? fmtGen(p.dispute_deposit) : 1} GEN deposit. Both sides add up to 3 pieces of evidence. Validators read the frozen evidence and reach consensus: client wins (full covered amount), split (half), freelancer wins, or not enough evidence (one more round, then no payout).</p></div>
+  <h2>What it cannot do</h2>
+  <div class="warn-box"><ul style="margin:0;padding-left:18px">
+  <li>It cannot see your bank and never opens links. Payments and work are judged only from the text people submit.</li>
+  <li>Handles are not verified accounts.</li>
+  <li>When the freelancer stays silent about a payment, any compensation is capped at 25%, needs reviewed payment proof, and is paid only after a 7-day window in which the freelancer can challenge.</li>
+  <li>Claiming a payment needs a refundable deposit; it is burned (paid to nobody) if the freelancer rejects the claim.</li>
+  <li>Compensation is paid in GEN to the client's wallet and covers the covered amount, not necessarily the full fee.</li>
+  <li>Validators are language models. They can be wrong. There is no appeal in this version.</li>
+  <li>This is a testnet prototype. Do not use real money.</li></ul></div>`);
+}
+
+async function pageSettings() {
+  view(`<h1>Settings</h1>
+  <div class="card"><label>Contract address</label><input id="caddr" class="mono" value="${esc(S.contract)}" placeholder="0x…">
+  <button class="btn block" style="margin-top:10px" id="save">Save</button>
+  <p class="mut" style="font-size:.85rem">Network: GenLayer Studio. You can also open this page with <code>?c=0x…</code>.</p></div>`);
+  $("#save").onclick = () => {
+    const v = $("#caddr").value.trim();
+    if (!validAddr(v)) return toast("Not a valid address", "err");
+    safeStore.set("hl_contract", v); S.contract = v; S.params = null; toast("Saved", "good"); location.hash = "#/";
+  };
+}
+
+async function route() {
+  const h = location.hash || "#/";
+  paintTabs(h);
+  const parts = h.slice(2).split("/");
+  try {
+    if (parts[0] !== "settings" && parts[0] !== "how" && !validAddr(S.contract)) return pageSettings();
+    switch (parts[0]) {
+      case "": return await pageHome();
+      case "freelancers": return await pageFreelancers();
+      case "freelancer": return await pageFreelancer(decodeURIComponent(parts[1] || ""));
+      case "gig": return await pageGig(decodeURIComponent(parts[1] || ""));
+      case "new": return await pageNew();
+      case "become": return await pageBecome();
+      case "me": return await pageMe();
+      case "how": return await pageHow();
+      case "settings": return await pageSettings();
+      default: return await pageHome();
+    }
+  } catch (e) { console.error(e); errBox(e); }
+}
+window.addEventListener("hashchange", route);
+paintWallet();
+route();
+if (safeStore.get("hl_auto") && window.ethereum) {
+  window.ethereum.request({ method: "eth_accounts" }).then(async acc => {
+    if (acc && acc[0]) { S.account = acc[0]; const sdk = await loadSdk(); S.client = sdk.createClient({ chain: sdk.studionet, account: acc[0] }); paintWallet(); route(); }
+  }).catch(() => {});
+}
+</script>
+</body>
+</html>
