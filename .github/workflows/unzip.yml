@@ -1,0 +1,22 @@
+name: unzip upload
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: |
+          set -e
+          mkdir -p /tmp/x
+          unzip -q -o hirelock.zip -d /tmp/x
+          rsync -a --exclude '.git' --exclude '.github' /tmp/x/ ./
+          rm -f hirelock.zip
+      - run: |
+          git config user.name "github-actions"
+          git config user.email "actions@github.com"
+          git add -A
+          git commit -m "Unpack HireLock project zip"
+          git push
