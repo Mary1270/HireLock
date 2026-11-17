@@ -25,7 +25,7 @@ Clients pay the freelancer off-chain, the way they already do. The freelancer ha
 1. Open GenLayer Studio, create a new file, paste `contracts/hirelock_testnet.py` (use `hirelock.py` for real time windows), deploy with no arguments.
 2. Open `frontend/index.html?c=<contract address>` or set the address under Settings.
 
-The offline stub checks logic and accounting. The testnet variant was also exercised on GenLayer Studio (contract 0x63cd0550A3e4d0a2cf38A51aA611cCBaD6aF5182); see Honest limits for what was and was not covered.
+Testnet contract on GenLayer Studio: 0x7F1C5f2A60aA331691fd8bCF1b771125b690eC73. The offline stub checks logic and accounting. The testnet variant was also exercised on GenLayer Studio (contract 0x63cd0550A3e4d0a2cf38A51aA611cCBaD6aF5182); see Honest limits for what was and was not covered.
 
 ## Base version
 
