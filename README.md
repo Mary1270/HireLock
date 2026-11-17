@@ -25,7 +25,7 @@ Clients pay the freelancer off-chain, the way they already do. The freelancer ha
 1. Open GenLayer Studio, create a new file, paste `contracts/hirelock_testnet.py` (use `hirelock.py` for real time windows), deploy with no arguments.
 2. Open `frontend/index.html?c=<contract address>` or set the address under Settings.
 
-Testnet contract on GenLayer Studio: 0x7F1C5f2A60aA331691fd8bCF1b771125b690eC73. The offline stub checks logic and accounting. The testnet variant was also exercised on GenLayer Studio (contract 0x63cd0550A3e4d0a2cf38A51aA611cCBaD6aF5182); see Honest limits for what was and was not covered.
+Production contract on GenLayer Studio (contracts/hirelock.py): 0x0CC01C64e7bBFaA4692639F148dE893089fE92eA. Fast-window test contract (hirelock_testnet.py), used for the live lifecycle tests: 0x7F1C5f2A60aA331691fd8bCF1b771125b690eC73. The offline stub checks logic and accounting. See Honest limits for what was and was not covered live.
 
 ## Base version
 
@@ -35,7 +35,7 @@ Same gig flow, with ETH stakes. Differences from the GenLayer version:
 - Gigs bound by freelancer silence cap compensation at 25%, need the arbiter's `paymentEvidenceReviewed` flag, and pay out only after a 7-day window in which the freelancer can challenge. Claiming a payment needs a refundable deposit (see ARCHITECTURE.md).
 - Invalid input reverts normally (ETH is returned by the EVM), so no refund-instead-of-revert path.
 - Constants are scaled to ETH (min stake 0.005, cover cap 0.002 / 0.01 / 0.04, dispute deposit 0.001). Constructor takes `(arbiter, timeUnit)`; use 3600 for real windows, 5 for fast tests.
-- The Solidity code compiles and the Foundry tests pass in CI (`base-tests.yml`). It has not been deployed to a live chain and has not been audited.
+- The Foundry tests are meant to run in CI (`.github/workflows/tests.yml`); the Solidity code has not been deployed to a live chain and has not been audited.
 - The arbiter should be a multisig contract; the deploy script refuses an EOA unless `ALLOW_EOA_ARBITER=true` (testnet only). Arbiter changes are timelocked 7 days (`proposeArbiter`, `applyArbiterChange`).
 - Deploy: `cd base && ARBITER=0x... forge script script/Deploy.s.sol --rpc-url https://sepolia.base.org --account <keystore> --broadcast`, then open `frontend/base.html?c=<address>&n=sepolia`.
 - Mini app: host `frontend/` over https, replace `APP_URL` in `base.html` and `.well-known/farcaster.json`, and sign the account association with Base Build. The mini app is untested.
